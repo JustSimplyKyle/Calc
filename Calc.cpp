@@ -1,7 +1,7 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <cmath
+#include <cmath>
 using namespace std;
 double small_calc(double left, char ch, double right)
 {
