@@ -98,6 +98,7 @@ int main()
         }
         if(*begin_iterator == '!'){
             input_ch.insert(begin_iterator+1, '1');
+            begin_iterator = input_ch.begin()+cnt;
         }
         end_iterator = input_ch.end();
         if (begin_iterator < end_iterator)
