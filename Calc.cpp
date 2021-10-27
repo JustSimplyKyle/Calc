@@ -4,9 +4,13 @@
 #include <cmath>
 using namespace std;
 double factor(double number){
-    for(int i = number-1;i>=1;i--){
-        number=number*i;
+    if(number!=0){
+        for(int i = number-1;i>=1;i--){
+            number=number*i;
+        }
     }
+    else
+        number=1;
     return number;
 }
 double small_calc(double left, char ch, double right)
