@@ -3,6 +3,12 @@
 #include <vector>
 #include <cmath>
 using namespace std;
+double factor(double number){
+    for(int i = number-1;i>=1;i--){
+        number=number*i;
+    }
+    return number;
+}
 double small_calc(double left, char ch, double right)
 {
     double result;
@@ -25,6 +31,9 @@ double small_calc(double left, char ch, double right)
     else if(ch=='^'){
         result=pow(left, right);
     }
+    else if(ch=='!'){
+        result=factor(left);
+    }
     return result;
 }
 double big_calc(vector<double> numbers, vector<char> math_calc)
@@ -33,7 +42,7 @@ double big_calc(vector<double> numbers, vector<char> math_calc)
     double result;
     for (int i = 0; i < math_calc.size(); i++) // calculate power first
     {
-        if (math_calc[i] == '^')
+        if (math_calc[i] == '^' || math_calc[i] == '!')
         {
             numbers[i] = small_calc(numbers[i], math_calc[i], numbers[i + 1]);
             numbers.erase(numbers.begin() + i + 1);
@@ -86,6 +95,9 @@ int main()
             begin_iterator = input_ch.begin()+cnt;
             input_ch.insert(begin_iterator+3,'5');
             begin_iterator = input_ch.begin()+cnt;
+        }
+        if(*begin_iterator == '!'){
+            input_ch.insert(begin_iterator+1, '1');
         }
         end_iterator = input_ch.end();
         if (begin_iterator < end_iterator)
