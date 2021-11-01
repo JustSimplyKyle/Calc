@@ -6,13 +6,11 @@
 using namespace std;
 
 double factor(double number) {
-    if (number != 0) {
-        for (double i = number - 1; i >= 1; i--) {
-            number = number * i;
-        }
-    } else
-        number = 1;
-    return number;
+    double ret=1;
+    while (number > 1){
+        ret *= number--;
+    }
+    return ret;
 }
 
 double small_calc(double left, char ch, double right) {
