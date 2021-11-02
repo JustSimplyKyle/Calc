@@ -6,8 +6,8 @@
 using namespace std;
 
 double factor(double number) {
-    double ret=1;
-    while (number > 1){
+    double ret = 1;
+    while (number > 1) {
         ret *= number--;
     }
     return ret;
@@ -15,18 +15,27 @@ double factor(double number) {
 
 double small_calc(double left, char ch, double right) {
     double result = 0;
-    if (ch == '+') {
-        result = left + right;
-    } else if (ch == '-') {
-        result = left - right;
-    } else if (ch == '*') {
-        result = left * right;
-    } else if (ch == '/') {
-        result = left / right;
-    } else if (ch == '^') {
-        result = pow(left, right);
-    } else if (ch == '!') {
-        result = factor(left);
+    switch (ch) {
+        case '+':
+            result = left + right;
+            break;
+        case '-':
+            result = left - right;
+            break;
+        case '*':
+            result = left * right;
+            break;
+        case '/':
+            result = left / right;
+            break;
+        case '^':
+            result = pow(left, right);
+            break;
+        case '!':
+            result = factor(left);
+            break;
+        default:
+            return result;
     }
     return result;
 }
