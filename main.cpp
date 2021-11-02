@@ -43,26 +43,26 @@ double small_calc(double left, char ch, double right) {
 double big_calc(vector<double> numbers, vector<char> math_calc) {
     double temp_result;
     double result;
-    for (int i = 0; i < math_calc.size(); i++) // calculate power first
+    for (int i = 0; i < math_calc.size(); ++i) // calculate power first
     {
         if (math_calc[i] == '^' || math_calc[i] == '!') {
             numbers[i] = small_calc(numbers[i], math_calc[i], numbers[i + 1]);
             numbers.erase(numbers.begin() + i + 1);
             math_calc.erase(math_calc.begin() + i);
-            i--; // to compensate for the erase movement
+            --i; // to compensate for the erase movement
         }
     }
-    for (int i = 0; i < math_calc.size(); i++) // calculate multiplication and division first
+    for (int i = 0; i < math_calc.size(); ++i) // calculate multiplication and division first
     {
         if (math_calc[i] == '*' || math_calc[i] == '/') {
             numbers[i] = small_calc(numbers[i], math_calc[i], numbers[i + 1]);
             numbers.erase(numbers.begin() + i + 1);
             math_calc.erase(math_calc.begin() + i);
-            i--; // to compensate for the erase movement
+            --i; // to compensate for the erase movement
         }
     }
     temp_result = numbers[0];
-    for (int i = 0; i < math_calc.size(); i++) {
+    for (int i = 0; i < math_calc.size(); ++i) {
         temp_result = small_calc(temp_result, math_calc[i], numbers[i + 1]);
     }
     result = temp_result;
@@ -98,13 +98,13 @@ int main() {
             begin_iterator = input_ch.begin() + cnt;
         }
         if (begin_iterator < input_ch.end()) {
-            cnt++;
-            begin_iterator++;
+            ++cnt;
+            ++begin_iterator;
         }
     }
     begin_iterator = input_ch.begin();
     auto end_iterator = input_ch.end();
-    for (int i = 0; i < input_ch.size(); i++) // extract char
+    for (int i = 0; i < input_ch.size(); ++i) // extract char
     {
         if (!isdigit(*begin_iterator) && *begin_iterator != '.') {
             if (!(!isdigit(*(begin_iterator - 1)) && *begin_iterator == '-')) {
@@ -117,21 +117,21 @@ int main() {
 
         }
         if (begin_iterator < end_iterator) {
-            cnt++;
-            begin_iterator++;
+            ++cnt;
+            ++begin_iterator;
         }
     }
     string str_temp;
     begin_iterator = input_ch.begin();
     end_iterator = input_ch.end();
-    for (int i = 0; i <= math_calc.size(); i++) // extract str_numbers
+    for (int i = 0; i <= math_calc.size(); ++i) // extract str_numbers
     {
         while (*begin_iterator != '\n') {
             if (isdigit(*begin_iterator) || *begin_iterator == '.' || *begin_iterator == '-') {
                 str_temp.push_back(*begin_iterator);
             }
             if (begin_iterator < end_iterator) {
-                begin_iterator++;
+                ++begin_iterator;
             } else {
                 break;
             }
@@ -139,21 +139,21 @@ int main() {
         if (!str_temp.empty())
             number_str.push_back(str_temp);
         str_temp.clear();
-        begin_iterator++;
+        ++begin_iterator;
     }
     auto in_it = number_str.begin(); //it stands for iterator
     auto out_it = number_str.end();
-    for (int i = 0; i < number_str.size(); i++) //convert str_numbers to double_numbers
+    for (int i = 0; i < number_str.size(); ++i) //convert str_numbers to double_numbers
     {
         numbers.push_back(stod(*in_it)); //stod -- convert str_number to double
         if (in_it < out_it) {
-            in_it++;
+            ++in_it;
         }
     }
     int para_size = 0;
-    for (int i = 0; i <= math_calc.size(); i++) {
+    for (int i = 0; i <= math_calc.size(); ++i) {
         if (math_calc[i] == '(') {
-            para_size++;
+            ++para_size;
         }
     }
     for (int k = 0; k < para_size; k++) {
@@ -173,7 +173,7 @@ int main() {
                         for (int w = 0; w <= j; w++) //find how many parenthesis are in the current iteration
                         {
                             if (math_calc[w] == '(') {
-                                now_para_size++;
+                                ++now_para_size;
                             }
                         }
                         in_iter = math_calc.begin() + j;
