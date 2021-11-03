@@ -1,0 +1,3 @@
+/home/kyle/Downloads/Calc/CMakeFiles/rebuild_cache.dir
+/home/kyle/Downloads/Calc/CMakeFiles/edit_cache.dir
+/home/kyle/Downloads/Calc/CMakeFiles/Calculator.dir
