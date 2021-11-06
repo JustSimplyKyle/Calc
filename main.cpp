@@ -119,7 +119,59 @@ double big_calc(vector<double> numbers, vector<char> math_calc, vector<char> pur
     result = temp_result;
     return result;
 }
-
+void absolute(vector<double> &numbers, vector<char> &math_calc, vector<char> &pure_calc){
+    int abs_size = 0;
+    for (int i = 0; i <= math_calc.size(); ++i) { // Find how many absolutes are in the Equation
+        if (math_calc[i] == '[') {
+            ++abs_size;
+        }
+    }
+    for (int k = 0; k < abs_size; ++k) {
+        int now_abs_size = 0;
+        auto in_iter = math_calc.begin();
+        auto out_iter = math_calc.begin();
+        int num_in = 0;
+        int num_out = 0;
+        vector<double> temp_numbers;
+        vector<char> temp_ch;
+        for (int i = 0; i <= math_calc.size(); ++i) {
+            if (math_calc[i] == '[') {
+                in_iter += i;
+                for (int j = 0; j <= math_calc.size(); ++j) {
+                    if (math_calc[j] == '[') {
+                        now_abs_size = 0;           //reset now_abs_size
+                        for (int w = 0; w <= j; ++w) //find how many parenthesis are in the current iteration
+                            {
+                            if (math_calc[w] == '[') {
+                                ++now_abs_size;
+                            }
+                            }
+                        in_iter = math_calc.begin() + j;
+                        num_in = j + 1 - now_abs_size;
+                    } else if (math_calc[j] == ']') {
+                        out_iter += j;
+                        num_out = j - now_abs_size - 1;
+                        break;
+                    }
+                }
+                break;
+            }
+        }
+        for (int i = num_in; i <= num_out; ++i) {
+            temp_ch.push_back(pure_calc[i]);
+        }
+        for (int i = num_in; i <= num_out + 1; ++i) {
+            temp_numbers.push_back(numbers[i]);
+        }
+        numbers[num_in] = abs(big_calc(temp_numbers, temp_ch, pure_calc));
+        numbers.erase(num_in + numbers.begin() + 1, num_out + numbers.begin() + 2);
+        pure_calc.erase(pure_calc.begin() + num_in, num_out + pure_calc.begin() + 1);
+        math_calc.erase(in_iter, out_iter + 1);
+        // start resetting variables
+        temp_ch.clear();
+        temp_numbers.clear();
+    }
+}
 int main() {
     cout << "Input Calc" << endl;
     vector<string> number_str;
@@ -160,7 +212,7 @@ int main() {
         if (!isdigit(*begin_iterator) && *begin_iterator != '.') {
             if (!(!isdigit(*(begin_iterator - 1)) && *begin_iterator == '-')) {
                 math_calc.push_back(*begin_iterator);
-                if (*begin_iterator != '(' && *begin_iterator != ')' && *begin_iterator != '|') {
+                if (*begin_iterator != '(' && *begin_iterator != ')' && *begin_iterator != '|' &&*begin_iterator != '[' && *begin_iterator != ']') {
                     pure_calc.push_back(*begin_iterator);
                 }
                 *begin_iterator = '\n';
@@ -201,6 +253,10 @@ int main() {
             ++in_it;
         }
     }
-    cout << big_calc(numbers, math_calc, pure_calc) << endl;
+    absolute(numbers, math_calc, pure_calc);
+    if(!pure_calc.empty() && !math_calc.empty())
+        cout << big_calc(numbers, math_calc, pure_calc) << endl;
+    else
+        cout << numbers[0] << endl;
     return 0;
 }
