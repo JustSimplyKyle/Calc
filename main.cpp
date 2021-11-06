@@ -62,11 +62,11 @@ double big_calc(vector<double> numbers, vector<char> math_calc, vector<char> pur
                     if (math_calc[j] == '(') {
                         now_para_size = 0;           //reset now_para_size
                         for (int w = 0; w <= j; ++w) //find how many parenthesis are in the current iteration
-                            {
+                        {
                             if (math_calc[w] == '(') {
                                 ++now_para_size;
                             }
-                            }
+                        }
                         in_iter = math_calc.begin() + j;
                         num_in = j + 1 - now_para_size;
                     } else if (math_calc[j] == ')') {
@@ -95,23 +95,23 @@ double big_calc(vector<double> numbers, vector<char> math_calc, vector<char> pur
     double temp_result;
     double result;
     for (int i = 0; i < math_calc.size(); ++i) // calculate power first
-        {
+    {
         if (math_calc[i] == '^' || math_calc[i] == '!') {
             numbers[i] = small_calc(numbers[i], math_calc[i], numbers[i + 1]);
             numbers.erase(numbers.begin() + i + 1);
             math_calc.erase(math_calc.begin() + i);
             --i; // to compensate for the erase-movement
         }
-        }
+    }
     for (int i = 0; i < math_calc.size(); ++i) // calculate multiplication and division first
-        {
+    {
         if (math_calc[i] == '*' || math_calc[i] == '/') {
             numbers[i] = small_calc(numbers[i], math_calc[i], numbers[i + 1]);
             numbers.erase(numbers.begin() + i + 1);
             math_calc.erase(math_calc.begin() + i);
             --i; // to compensate for the erase-movement
         }
-        }
+    }
     temp_result = numbers[0];
     for (int i = 0; i < math_calc.size(); ++i) {
         temp_result = small_calc(temp_result, math_calc[i], numbers[i + 1]);
@@ -119,6 +119,7 @@ double big_calc(vector<double> numbers, vector<char> math_calc, vector<char> pur
     result = temp_result;
     return result;
 }
+
 int main() {
     cout << "Input Calc" << endl;
     vector<string> number_str;
