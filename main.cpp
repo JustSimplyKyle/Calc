@@ -49,19 +49,18 @@ double small_calc(double left, char ch, double right) {
 }
 
 void parenthesis(number &Number,char par1,char par2){ //par1 = ( or [ par2= ) or ]
-    char opsit;
-    if(par1=='[')
-        opsit='(';
-    else if(par1=='(')
-        opsit='[';
     double big_calc(number number);
     int para_size = 0;
-    for (int i = 0; i <= Number.math_calc.size(); ++i) {
+    for (int i = 0; i < Number.math_calc.size(); ++i) {
         if (Number.math_calc[i] == par1) {
             ++para_size;
         }
     }
-    for (int k = 0; k < para_size; ++k) {
+    if (par1=='(')
+        char opsitite='[';
+    else if (par1=='[');
+        char opsitite='(';
+    for (int k = 0; k < para_size; ++k) { // this loop will only excute when there is parenthesis.
         int now_para_size = 0;
         auto in_iter = Number.math_calc.begin();
         auto out_iter = Number.math_calc.begin();
@@ -76,10 +75,7 @@ void parenthesis(number &Number,char par1,char par2){ //par1 = ( or [ par2= ) or
                         now_para_size = 0;           //reset now_para_size
                         for (int w = 0; w <= j; ++w) //find how many parenthesis are in the current iteration
                         {
-                            if(Number.math_calc[w] == opsit){
-                                ++now_para_size;
-                            }
-                            if (Number.math_calc[w] == par1) {
+                            if (Number.math_calc[w] == par1 || Number.math_calc[w] == opsitite) {
                                 ++now_para_size;
                             }
                         }
@@ -100,7 +96,10 @@ void parenthesis(number &Number,char par1,char par2){ //par1 = ( or [ par2= ) or
         for (int i = num_in; i <= num_out + 1; ++i) {
             num.calc_numbers.push_back(Number.calc_numbers[i]);
         }
-        Number.calc_numbers[num_in] = abs(big_calc(num));
+        if(par1=='[')
+            Number.calc_numbers[num_in] = abs(big_calc(num));
+        else
+            Number.calc_numbers[num_in]=big_calc(num);
         Number.calc_numbers.erase(num_in + Number.calc_numbers.begin() + 1, num_out + Number.calc_numbers.begin() + 2);
         Number.pure_calc.erase(Number.pure_calc.begin() + num_in, num_out + Number.pure_calc.begin() + 1);
         Number.math_calc.erase(in_iter, out_iter + 1);
@@ -110,15 +109,7 @@ void parenthesis(number &Number,char par1,char par2){ //par1 = ( or [ par2= ) or
     }
 }
 double big_calc(number number) {
-    bool paren=false;
-    for(const char &i:number.math_calc){
-        if(i=='('){
-            paren=true;
-            break;
-        }
-    }
-    if(paren)
-        parenthesis(number,'(',')');
+    parenthesis(number,'(',')');
     double temp_result;
     double result;
     for (int i = 0; i < number.math_calc.size(); ++i) // calculate power first
